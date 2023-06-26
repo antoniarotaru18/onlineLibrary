@@ -1,10 +1,13 @@
 package com.sda.onlineLibrary.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
 
     private String name;

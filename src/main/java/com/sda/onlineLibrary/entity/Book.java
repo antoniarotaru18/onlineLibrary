@@ -27,7 +27,8 @@ public class Book {
     private Integer pages;
 
     private String description;
-
+    @Lob
+    @Column(columnDefinition="LONGBLOB")
     private byte[] photo;
 
 

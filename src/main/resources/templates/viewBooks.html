@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book list</title>
+</head>
+<body>
+<h1>Book List</h1>
+<div class="product-container">
+    <div th:each="bookDto : ${bookDtoList}" class="book-div">
+        <div>
+            <span>Name:</span>
+            <a th:href="@{/bookDto/{x}(x = ${bookDto.id})}" th:text="${bookDto.name}"></a>
+        </div>
+        <div>
+            <span>Author:</span>
+            <span th:text="${bookDto.author}"></span>
+        </div>
+
+        <div>
+            <span>Pages:</span>
+            <span th:text="${bookDto.pages}"></span>
+        </div>
+        <div>
+            <span>Publisher:</span>
+            <span th:text="${bookDto.publisher}"></span>
+        </div>
+        <div>
+            <span>Genre:</span>
+            <span th:text="${bookDto.genre}"></span>
+        </div>
+        <div>
+            <span>Description:</span>
+            <span th:text="${bookDto.description}"></span>
+        </div>
+        <div>
+            <span></span>
+            <img th:src="@{'data:image/png;base64,' + bookDto.photo}" /></img>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
