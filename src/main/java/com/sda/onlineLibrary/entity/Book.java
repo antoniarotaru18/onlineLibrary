@@ -1,6 +1,7 @@
 package com.sda.onlineLibrary.entity;
 
 import com.sda.onlineLibrary.enums.Genre;
+import com.sda.onlineLibrary.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,8 @@ public class Book {
     private Integer pages;
 
     private String description;
+
+    private Status status;
     @Lob
     @Column(columnDefinition="LONGBLOB")
     private byte[] photo;

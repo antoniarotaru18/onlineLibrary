@@ -43,7 +43,7 @@ public class MvcController {
     public String getAllBooks(Model model) {
         List<BookDto> bookDtoList = bookService.getAllBookDtoList();
         model.addAttribute("books",  bookDtoList);
-        return "books";
+        return "viewBooks";
     }
 
     @PostMapping("/book/{bookId}")
@@ -51,6 +51,15 @@ public class MvcController {
         return "redirect:/book/" + bookId;
     }
 
+    @GetMapping("/review")
+    public String getReview(){
+        return "review";
+    }
+
+    @GetMapping("/contact")
+    public String getContact(){
+        return "contact";
+    }
 
 }
 

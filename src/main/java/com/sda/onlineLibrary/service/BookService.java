@@ -33,15 +33,7 @@ public class BookService {
         }
         return bookDtoList;
     }
-    public Optional<BookDto> getBookById(Long id) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        if (optionalBook.isEmpty()) {
-            return Optional.empty();
-        }
-        Book book = optionalBook.get();
-        BookDto bookDto = bookMapper.map(book);
-        return Optional.of(bookDto);
-    }
+
 
 }
 

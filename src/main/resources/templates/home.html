@@ -3,41 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-        .photo {
-            text-align: left;
-        }
-        h1 {
-            text-align: center;
-            color: darkorchid;
-        }
-        h3 {
-            text-align: center;
-            color: #a839e2;
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
         }
 
-        .photo-container {
-            float: left;
-            margin-right: 10px;
-            width: 200px;
-            height: 200px;
-        }
-        .photo-container img {
-            width: 200%;
-            height: 200%;
-            object-fit: cover;
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {height: 450px}
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
         }
 
+        /* Set black background color, white text and some padding */
+
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+            .row.content {height:auto;}
+        }
     </style>
 </head>
 <body>
-<h1>Bine ati venit in minunata lume a cartilor!</h1>
-<h3>Eu sunt Antonia, sunt pasionata de lectura de mai bine de 3 ani, cam de cand a inceput pandemia
-si de atunci nu ma mai opresc din citit. Tot din acea perioada am inceput sa colectionez multe carti si de cele mai multe
-ori uitam ce carti am cumparat si nu le mai citeam.</h3>
-<h3> Astfel a luat nastere "Online Library". O metoda super simpla de a avea acces la cartile tale din din buzunarul tau de oriunde ai fi!</h3>
-<div class="photo-container">
-<img src="poza1.png" alt="Image">
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/home">Home</a></li>
+                <li><a href="/addBook">Add a book</a></li>
+                <li><a href="/books">All books</a></li>
+                <li><a href="/review">Review</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <p><a href="#">Link</a></p>
+            <p><a href="#">Link</a></p>
+            <p><a href="#">Link</a></p>
+        </div>
+        <div class="col-sm-8 text-left">
+            <h1>Bine ati venit in minunata lume a cartilor!</h1>
+            <p>  </p><hr>
+        </div>
+        <div class="col-sm-2 sidenav">
+            <div class="well">
+                <p>ADS</p>
+            </div>
+            <div class="well">
+                <p>ADS</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<footer class="container-fluid text-center">
+    <p>Footer Text</p>
+</footer>
+
 </body>
 </html>
