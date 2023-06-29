@@ -27,8 +27,6 @@ public class Book {
 
     private Integer pages;
 
-    private String description;
-
     private Status status;
     @Lob
     @Column(columnDefinition="LONGBLOB")

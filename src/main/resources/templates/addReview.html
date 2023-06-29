@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Book list</title>
+    <title>Add review</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -11,23 +11,14 @@
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
-        }
-        h1 {
-            text-align: center;
-        }
-        .col-md-3 {
-            width: 20%;
-            margin-bottom: 30px;
-        }
 
+        }
 
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="/home">Home</a></li>
@@ -39,34 +30,6 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
-        </div>
-    </div>
-</nav>
-<h1>Aici vezi toate cărțile pe care le deții! </h1>
-<br>
-<div class="product-container">
-    <div th:each="book : ${books}" class="col-md-3">
-        <div class="book-div">
-            <div>
-                <span>Name:</span>
-                <a th:href="@{/book/{x}(x = ${book.id})}" th:text="${book.name}"></a>
-            </div>
-            <div>
-                <span>Author:</span>
-                <span th:text="${book.author}"></span>
-            </div>
-
-            <div>
-                <span>Status:</span>
-                <span th:text="${book.status}"></span>
-            </div>
-
-            <div>
-                <span></span>
-                <img th:src="${book.photo}" style="width: 270px; height: 300px;">
-            </div>
-        </div>
-    </div>
-
+            <
 </body>
 </html>

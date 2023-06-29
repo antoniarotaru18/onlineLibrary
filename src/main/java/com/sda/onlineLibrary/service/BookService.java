@@ -34,6 +34,15 @@ public class BookService {
         return bookDtoList;
     }
 
+    public Optional<BookDto> getOptionalBookDtoById(String bookId) {
+        Optional<Book> optionalBook = bookRepository.findById(Long.valueOf(bookId));
+        if (optionalBook.isEmpty()){
+            return Optional.empty();
+        }
+        Book product = optionalBook.get();
+        BookDto productDto = bookMapper.map(product);
+        return Optional.of(productDto);
+    }
 
 }
 

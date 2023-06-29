@@ -1,6 +1,6 @@
 package com.sda.onlineLibrary.enums;
 
 public enum Role {
-    ADMIN,
-    GUEST;
+    ROLE_ADMIN,
+    ROLE_USER;
 }

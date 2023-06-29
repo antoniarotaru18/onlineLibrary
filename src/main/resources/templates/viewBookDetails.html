@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/books">All books</a></li>
+                <li><a href="/addBook">Add a book</a></li>
+                <li><a href="/reviews">Review</a></li>
+                <li><a href="/addReview">Add a review</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<form th:action="${requestUrl}" method="post">
+ <div class="product-container">
+    <div class="book-div">
+        <div>
+            <span>Name:</span>
+            <a th:href="@{/book/{x}(x = ${bookDto.id})}" th:text="${bookDto.name}"></a>
+        </div>
+        <div>
+            <span>Author:</span>
+            <span th:text="${bookDto.author}"></span>
+        </div>
+
+        <div>
+            <span>Pages:</span>
+            <span th:text="${bookDto.pages}"></span>
+        </div>
+
+        <div>
+            <span>Publisher:</span>
+            <span th:text="${bookDto.publisher}"></span>
+        </div>
+
+        <div>
+            <span>Genre:</span>
+            <span th:text="${bookDto.genre}"></span>
+        </div>
+
+        <div>
+            <span>Status:</span>
+            <span th:text="${bookDto.status}"></span>
+        </div>
+
+        <div>
+            <span></span>
+            <img th:src="${bookDto.photo}" style="width: 270px; height: 300px;" >
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>

@@ -22,7 +22,6 @@ public class BookMapper {
                 .publisher(bookDto.getPublisher())
                 .genre(Genre.valueOf(bookDto.getGenre()))
                 .pages(Integer.valueOf(bookDto.getPages()))
-                .description(bookDto.getDescription())
                 .status(Status.valueOf(bookDto.getStatus()))
                 .photo(convertToBytes(bookPhoto))
                 .build();
@@ -47,7 +46,6 @@ public class BookMapper {
                 .genre(String.valueOf(book.getGenre()))
                 .pages(String.valueOf(book.getPages()))
                 .status(String.valueOf(book.getStatus()))
-                .description(book.getDescription())
                 .photo(BASE64_PREFIX + Base64.encodeBase64String(book.getPhoto()))
                 .build();
         return bookDto;

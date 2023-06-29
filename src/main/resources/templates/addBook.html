@@ -21,9 +21,13 @@
 
 
             }
-            .bookForm{
+            .bookForm {
                 font-size: 150%;
                 color: #2d002d;
+                margin: 0 auto;
+                max-width: 500px;
+                text-align: right;
+                margin-top: 10%;
             }
 
 
@@ -57,11 +61,11 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/home">Home</a></li>
-                <li><a href="/addBook">Add a book</a></li>
+                <li><a href="/home">Home</a></li>
                 <li><a href="/books">All books</a></li>
-                <li><a href="/review">Review</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/addBook">Add a book</a></li>
+                <li><a href="/reviews">Review</a></li>
+                <li><a href="/addReview">Add a review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -75,11 +79,8 @@
             <h1>Aici este locul unde îți poți adăuga cărțile în bibliotecă ca să le poți avea la îndemană!</h1>
         </div>
         <div class="col-sm-2 sidenav">
-            <div class="well">
-                <p>photo</p>
-            </div>
-            <div class="well">
-                <p>photo</p>
+            <div class="col-sm-2 sidenav">
+                <img src="ispita.png" alt="Ispita" style="max-width: 100%;">
             </div>
         </div>
     </div>
@@ -123,6 +124,7 @@
                 <option value="HIGH_FANTASY">High Fantasy</option>
             </select>
         </div>
+
         <div class="form-group">
             <label class="form-label" for="inputStatus">Book Status</label>
             <select th:field="*{status}" class="form-control" id="inputStatus" name="genre">
@@ -131,11 +133,6 @@
                 <option value="DNF">DNF</option>
                 <option value="READ">Read</option>
             </select>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" for="inputDescription">Book Description</label>
-            <input th:field="*{description}" type="text" class="form-control" id="inputDescription" placeholder="Description">
         </div>
 
         <div class="form-group">

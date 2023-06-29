@@ -5,9 +5,10 @@ import com.sda.onlineLibrary.entity.User;
 import com.sda.onlineLibrary.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-
+@Component
 public class UserMapper {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
