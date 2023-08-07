@@ -1,66 +1,101 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+    <style>
+
+        .reg-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: #e0b0ff;
+            width: fit-content;
+            padding: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+            box-shadow: 10px 10px 5px plum;
+        }
+
+        .reg-element {
+            font-size: 1.5em;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .container-border {
+            border: 3px solid rgb(224, 176, 255);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+
+        }
+
+        body {
+
+        }
+    </style>
+
 </head>
 <body>
 <form th:object="${userDto}" action="/registration" method="post">
-  <div class="reg-container">
-    <div class="reg-element">
-      <label>First name</label>
-      <input th:field="*{firstName}" type="text"><br/>
+    <div class="reg-container container-border">
+        <div class="reg-element">
+            <label>First name</label>
+            <input th:field="*{firstName}" type="text"><br/>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}" class="error"/>
+        </div>
+        <div class="reg-element">
+            <label>Last name</label>
+            <input th:field="*{lastName}" type="text"><br/>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}" class="error"/>
+        </div>
+        <div class="reg-element">
+            <label>Email</label>
+            <input th:field="*{email}" type="email"><br/>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('email')}" th:text="${error}" class="error"></p>
+        </div>
+        <div class="reg-element">
+            <label>Password</label>
+            <input th:field="*{password}" type="password"><br/>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('password')}" th:text="${error}" class="error"/>
+        </div>
+        <div class="reg-element">
+            <label>Role</label>
+            <select th:field="*{role}" id="role">
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_USER">User</option>
+            </select>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('role')}" th:text="${error}" class="error"/>
+        </div>
+        <div class="reg-element">
+            <label>Date of birth</label>
+            <input th:field="*{dateOfBirth}" type="date"><br/>
+        </div>
+        <div>
+            <p th:each="error : ${#fields.errors('dateOfBirth')}" th:text="${error}" class="error"/><br>
+        </div>
+        <div class="buttons-div">
+            <div>
+                <button type="submit">Register</button>
+                <button type="button" onclick="window.location.href='/login'" style="margin-left: 133px">Login</button>
+            </div>
+        </div>
     </div>
-    <div>
-      <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}" class="error"/>
-    </div>
-    <div class="reg-element">
-      <label>Last name</label>
-      <input th:field="*{lastName}" type="text"><br/>
-    </div>
-    <div>
-      <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}" class="error"/>
-    </div>
-    <div class="reg-element">
-      <label>Email</label>
-      <input th:field="*{email}" type="email"><br/>
-    </div>
-    <div>
-      <p th:each="error : ${#fields.errors('email')}" th:text="${error}" class="error"></p>
-    </div>
-    <div class="reg-element">
-      <label>Password</label>
-      <input th:field="*{password}" type="password"><br/>
-    </div>
-    <div>
-      <p th:each="error : ${#fields.errors('password')}" th:text="${error}" class="error"/>
-    </div>
-    <div class="reg-element">
-      <label>Role</label>
-      <select th:field="*{role}" id="role">
-        <option value="ROLE_ADMIN">Admin</option>
-        <option value="ROLE_USER">User</option>
-      </select>
-    </div>
-    <div>
-      <p th:each="error : ${#fields.errors('role')}" th:text="${error}" class="error"/>
-    </div>
-    <div class="reg-element">
-      <label>Date of birth</label>
-      <input th:field="*{dateOfBirth}" type="date"><br/>
-    </div>
-    <div>
-      <p th:each="error : ${#fields.errors('dateOfBirth')}" th:text="${error}" class="error"/><br>
-    </div>
-    <div class="buttons-div">
-      <div>
-        <button type="submit">Register</button>
-      </div>
-<!--      <div>-->
-<!--        <button type="button" onclick="window.location.href='/login'" style="margin-left: 133px">Login</button>-->
-<!--      </div>-->
-    </div>
-  </div>
 </form>
 </body>
 </html>

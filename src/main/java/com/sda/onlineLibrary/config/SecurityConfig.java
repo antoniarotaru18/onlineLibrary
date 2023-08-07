@@ -21,15 +21,16 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/css/*").permitAll();
-                    auth.requestMatchers("/images/*").permitAll();
+                    auth.requestMatchers("/photos/*").permitAll();
 
                     auth.requestMatchers("/home").permitAll();
+                    auth.requestMatchers("/registration").permitAll();
+                    auth.requestMatchers("login").permitAll();
+
 
                     auth.requestMatchers("/addBook").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/book/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/books").hasAnyRole("ADMIN", "USER");
-
-                    auth.requestMatchers("/registration").permitAll();
 
                     auth.requestMatchers("/addReview").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/reviews").hasAnyRole("ADMIN", "USER");

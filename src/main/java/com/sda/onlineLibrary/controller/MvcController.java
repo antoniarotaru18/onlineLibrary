@@ -2,13 +2,17 @@ package com.sda.onlineLibrary.controller;
 
 import com.sda.onlineLibrary.dto.BookDto;
 import com.sda.onlineLibrary.dto.LoginDto;
+import com.sda.onlineLibrary.dto.ReviewDto;
 import com.sda.onlineLibrary.dto.UserDto;
+import com.sda.onlineLibrary.enums.Status;
 import com.sda.onlineLibrary.service.BookService;
 import com.sda.onlineLibrary.service.LoginService;
+import com.sda.onlineLibrary.service.ReviewService;
 import com.sda.onlineLibrary.service.UserService;
 import com.sda.onlineLibrary.validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +23,7 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class MvcController {
@@ -34,6 +39,9 @@ public class MvcController {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @GetMapping("/home")
     public String getHome() {
         return "home";
@@ -47,8 +55,9 @@ public class MvcController {
 
     @PostMapping("/addBook")
     public String addBookPost(@ModelAttribute(name = "bookDto") @Valid BookDto bookDto
-            , BindingResult bindingResult, @RequestParam("bookPhoto") MultipartFile bookPhoto) throws IOException {
-        bookService.createBook(bookDto, bookPhoto);
+            , BindingResult bindingResult, @RequestParam("bookPhoto") MultipartFile bookPhoto, Authentication authentication) throws IOException {
+
+        bookService.createBook(bookDto, bookPhoto, authentication.getName());
         if (bindingResult.hasErrors()) {
             return "addBook";
         }
@@ -56,8 +65,9 @@ public class MvcController {
     }
 
     @GetMapping("/books")
-    public String getAllBooks(Model model) {
-        List<BookDto> bookDtoList = bookService.getAllBookDtoList();
+    public String getAllBooks(Model model, Authentication authentication) {
+        // ded tirmis la serviciu authentication.get ca fiind user logat
+        List<BookDto> bookDtoList = bookService.getAllBookDtoListByUsername(authentication);
         model.addAttribute("books", bookDtoList);
         return "viewBooks";
     }
@@ -67,10 +77,12 @@ public class MvcController {
         return "redirect:/book/" + bookId;
     }
 
-    //    @GetMapping("/review")
-//    public String getReview(){
-//        return "review";
-//    }
+    @PostMapping("/book/{bookId}/updateStatus")
+    public String updateBookStatus(@PathVariable(value = "bookId") String bookId, @RequestParam("newStatus") String newStatus) {
+        Status status = Status.valueOf(newStatus);
+        bookService.updateBookStatus(bookId, status);
+        return "redirect:/book/" + bookId;
+    }
     @GetMapping("/registration")
     public String registrationGet(Model model) {
         System.out.println("S-a apelat registration GET");
@@ -115,24 +127,35 @@ public class MvcController {
     }
 
     @GetMapping("/addReview")
-    public String getReviews() {
-        return "reviews";
+    public String addReviewGet(Model model, Authentication authentication) {
+        String userEmail = authentication.getName();
+        model.addAttribute("reviewDto", new ReviewDto());
+
+        List<BookDto> bookDtoList = bookService.getBookDtoListByOwnerEmailAndStatus(userEmail, Status.READ);
+        model.addAttribute("bookDtoList", bookDtoList);
+        return "addReview";
     }
+
     @PostMapping("/addReview")
-    public String addReviewPost(){
+    public String addReviewPost(ReviewDto reviewDto, Model model) {
+        reviewService.addReview(reviewDto);
+
         return "redirect:/addReview";
     }
+
 
     @GetMapping("/reviews")
     public String getAllReviews() {
         return "reviews";
     }
+
     @PostMapping("/reviews")
-    public String addReviewsPost(){
+    public String addReviewsPost() {
         return "redirect:/reviews";
     }
+
     @ModelAttribute("requestUrl")
-    public String requestUrl(HttpServletRequest request){
+    public String requestUrl(HttpServletRequest request) {
         return request.getRequestURI();
     }
 

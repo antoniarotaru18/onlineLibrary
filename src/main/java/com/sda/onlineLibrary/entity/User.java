@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +31,7 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    @ManyToMany( mappedBy = "users")
+    private List<Book> books;
 }

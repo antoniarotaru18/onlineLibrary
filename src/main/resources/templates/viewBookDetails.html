@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Book Details</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
 
@@ -20,49 +23,50 @@
                 <li><a href="/addReview">Add a review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <form th:action="${requestUrl}" method="post">
- <div class="product-container">
-    <div class="book-div">
-        <div>
-            <span>Name:</span>
-            <a th:href="@{/book/{x}(x = ${bookDto.id})}" th:text="${bookDto.name}"></a>
-        </div>
-        <div>
-            <span>Author:</span>
-            <span th:text="${bookDto.author}"></span>
+    <div class="product-container">
+        <div class="book-div">
+            <div style="display: flex; align-items: center;">
+                <div style="flex: 1;">
+                    <img th:src="${bookDto.photo}" style="width: 270px; height: 300px;">
+                </div>
+                <div style="flex: 2;">
+                    <div>
+                        <span>Name:</span>
+                        <a th:href="@{/book/{x}(x = ${bookDto.id})}" th:text="${bookDto.name}"></a>
+                    </div>
+                    <div>
+                        <span>Author:</span>
+                        <span th:text="${bookDto.author}"></span>
+                    </div>
+
+                    <div>
+                        <span>Pages:</span>
+                        <span th:text="${bookDto.pages}"></span>
+                    </div>
+
+                    <div>
+                        <span>Publisher:</span>
+                        <span th:text="${bookDto.publisher}"></span>
+                    </div>
+
+                    <div>
+                        <span>Genre:</span>
+                        <span th:text="${bookDto.genre}"></span>
+                    </div>
+
+
+                </div>
+            </div>
+
         </div>
 
-        <div>
-            <span>Pages:</span>
-            <span th:text="${bookDto.pages}"></span>
-        </div>
-
-        <div>
-            <span>Publisher:</span>
-            <span th:text="${bookDto.publisher}"></span>
-        </div>
-
-        <div>
-            <span>Genre:</span>
-            <span th:text="${bookDto.genre}"></span>
-        </div>
-
-        <div>
-            <span>Status:</span>
-            <span th:text="${bookDto.status}"></span>
-        </div>
-
-        <div>
-            <span></span>
-            <img th:src="${bookDto.photo}" style="width: 270px; height: 300px;" >
-        </div>
     </div>
-</div>
 </form>
 </body>
 </html>

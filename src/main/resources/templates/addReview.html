@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add review</title>
+    <title>Add a review</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -13,6 +13,46 @@
             border-radius: 0;
 
         }
+
+        .reg-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: rgb(253, 249, 247);
+            width: 100%;
+            margin-top: 100%;
+            margin-left: 100%;
+            margin-right: 100%;
+            border-radius: 20px;
+            box-shadow: 10px 10px 5px rgba(245, 242, 242, 0.75);
+            padding: 100px;
+            height: 400px;
+        }
+
+        .reg-element {
+            font-size: 1.9em;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+
+        }
+
+
+        .container-border {
+            border: 3px solid rgb(250, 249, 253);
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+
+        }
+        body{
+            background-image: url("static/photos/addBook.jpg");
+        }
+
+
+
 
     </style>
 </head>
@@ -28,8 +68,32 @@
                 <li><a href="/addReview">Add a review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
-            <
+        </div>
+    </div>
+</nav>
+
+<h1>
+    Here is the place where you can write your thoughts and impressions about the book you read.
+</h1>
+<form th:object="${reviewDto}" action="/addReview" method="post">
+    <div class="reg-container container-border">
+        <div class="reg-element">
+            <select th:field="*{bookId}">
+                <option th:each="bookDto:${bookDtoList}" th:value="${bookDto.id}" th:text="${bookDto.name}"></option>
+            </select>
+        </div>
+        <div class="reg-element">
+            <input th:field="*{rating}" type="number" placeholder="Rating" min="1" max="5">
+        </div>
+        <div class="reg-element">
+            <textarea th:field="*{review}" placeholder="Your review here"></textarea>
+        </div>
+        <button type="submit">Add review</button>
+    </div>
+</form>
+
+
 </body>
 </html>
