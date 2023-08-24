@@ -1,12 +1,16 @@
 package com.sda.onlineLibrary.service;
 
 import com.sda.onlineLibrary.dto.BookDto;
+import com.sda.onlineLibrary.dto.ReviewDto;
 import com.sda.onlineLibrary.entity.Book;
+import com.sda.onlineLibrary.entity.Review;
 import com.sda.onlineLibrary.entity.User;
 import com.sda.onlineLibrary.enums.Status;
 import com.sda.onlineLibrary.mapper.BookMapper;
 import com.sda.onlineLibrary.repository.BookRepository;
+import com.sda.onlineLibrary.repository.ReviewRepository;
 import com.sda.onlineLibrary.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,10 @@ public class BookService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
 
     public void createBook(BookDto bookDto, MultipartFile bookPhoto, String email) {
         Optional<User> optionalUser = userRepository.findByPersonalEmail(email);
@@ -48,17 +56,10 @@ public class BookService {
     }
 
     public List<BookDto> getBookDtoListByOwnerEmailAndStatus(String email, Status status) {
-//        Optional<User> optionalUser = userRepository.findByPersonalEmail(email);
+
         List<BookDto> bookDtoList = new ArrayList<>();
-//
-//        if (optionalUser.isEmpty()) {
-//            return bookDtoList;
-//        }
-//        User user = optionalUser.get();
-//        List<Book> books = user.getBooks();
         List<Book> books = bookRepository.findByStatusAndUsersPersonalEmail(status, email);
         for (Book book : books) {
-//            if (book.getStatus().equals(status)) {
             BookDto bookDto = new BookDto();
             bookDto.setId(book.getId());
             bookDto.setName(book.getName());
@@ -70,10 +71,15 @@ public class BookService {
             bookDto.setPhoto(String.valueOf(book.getPhoto()));
 
             bookDtoList.add(bookDto);
-//            }
         }
-        System.out.println(bookDtoList);
-        return bookDtoList;
+        List<BookDto> booksWithoutReview = new ArrayList<>();
+        for (BookDto bookDto : bookDtoList) {
+            List<Review> reviews = reviewRepository.findByBookId(String.valueOf(bookDto.getId()));
+            if (reviews.isEmpty()) {
+                booksWithoutReview.add(bookDto);
+            }
+        }
+        return booksWithoutReview;
     }
 
     public Optional<BookDto> getOptionalBookDtoById(String bookId) {
@@ -92,11 +98,13 @@ public class BookService {
             Book book = optionalBook.get();
             Status currentStatus = book.getStatus();
 
-            if (newStatus != Status.READ && newStatus != currentStatus)
+            if (newStatus != currentStatus) {
                 book.setStatus(newStatus);
-            bookRepository.save(book);
+                bookRepository.save(book);
+            }
         }
     }
+
 }
 
 //    public Optional<BookDto> canAddReview(String bookId) {

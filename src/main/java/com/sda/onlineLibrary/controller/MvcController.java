@@ -4,6 +4,7 @@ import com.sda.onlineLibrary.dto.BookDto;
 import com.sda.onlineLibrary.dto.LoginDto;
 import com.sda.onlineLibrary.dto.ReviewDto;
 import com.sda.onlineLibrary.dto.UserDto;
+import com.sda.onlineLibrary.entity.Review;
 import com.sda.onlineLibrary.enums.Status;
 import com.sda.onlineLibrary.service.BookService;
 import com.sda.onlineLibrary.service.LoginService;
@@ -77,12 +78,14 @@ public class MvcController {
         return "redirect:/book/" + bookId;
     }
 
-    @PostMapping("/book/{bookId}/updateStatus")
+    @PostMapping("/book/{bookId}/update")
     public String updateBookStatus(@PathVariable(value = "bookId") String bookId, @RequestParam("newStatus") String newStatus) {
         Status status = Status.valueOf(newStatus);
+        System.out.println("s-a apelat update");
         bookService.updateBookStatus(bookId, status);
         return "redirect:/book/" + bookId;
     }
+
     @GetMapping("/registration")
     public String registrationGet(Model model) {
         System.out.println("S-a apelat registration GET");
@@ -137,19 +140,24 @@ public class MvcController {
     }
 
     @PostMapping("/addReview")
-    public String addReviewPost(ReviewDto reviewDto, Model model) {
+    public String addReviewPost(@ModelAttribute("reviewDto") @Valid ReviewDto reviewDto, BindingResult bindingResult) {
         reviewService.addReview(reviewDto);
-
+        if (bindingResult.hasErrors()) {
+            return "addReview";
+        }
         return "redirect:/addReview";
     }
 
 
     @GetMapping("/reviews")
-    public String getAllReviews() {
+    public  String getAllReviews(Model model, Authentication authentication) {
+        List<ReviewDto> reviewDtoList = reviewService.getAllReviews(authentication.getName());
+        model.addAttribute("reviews", reviewDtoList);
+        //transform reviews in reviewDtos si pe urma o afisez in front
         return "reviews";
     }
 
-    @PostMapping("/reviews")
+    @PostMapping("/reviews" )
     public String addReviewsPost() {
         return "redirect:/reviews";
     }
@@ -169,6 +177,21 @@ public class MvcController {
         model.addAttribute("bookDto", bookDto);
 
         return "viewBookDetails";
+    }
+    @PostMapping("/review/{reviewId}")
+    public String viewReviewPost(@PathVariable(value = "reviewId") String reviewId) {
+        return "redirect:/review/" + reviewId;
+    }
+    @GetMapping("/review/{reviewId}")
+    public String viewReviewGet(@PathVariable("reviewId") String reviewId, Model model) {
+        Optional<ReviewDto> optionalReviewDto = reviewService.getOptionalReviewDtoById(reviewId);
+        if (optionalReviewDto.isEmpty()) {
+            return "error";
+        }
+        ReviewDto reviewDto = optionalReviewDto.get();
+        model.addAttribute("reviewDto", reviewDto);
+
+        return "viewReviewDetails";
     }
 
 

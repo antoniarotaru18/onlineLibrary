@@ -20,7 +20,7 @@ import static com.sda.onlineLibrary.constant.Util.BASE64_PREFIX;
 public class BookMapper {
 
     public Book map(BookDto bookDto, MultipartFile bookPhoto, User user){
-        Book book = Book.builder()
+        return Book.builder()
                 .name(bookDto.getName())
                 .author(bookDto.getAuthor())
                 .publisher(bookDto.getPublisher())
@@ -30,7 +30,6 @@ public class BookMapper {
                 .photo(convertToBytes(bookPhoto))
                 .users(Collections.singletonList(user))
                 .build();
-        return book;
     }
 
     private byte[] convertToBytes(MultipartFile multipartFile) {
@@ -43,7 +42,7 @@ public class BookMapper {
 
 
     public BookDto map(Book book){
-        BookDto bookDto = BookDto.builder()
+        return BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .author(book.getAuthor())
@@ -53,7 +52,6 @@ public class BookMapper {
                 .status(String.valueOf(book.getStatus()))
                 .photo(BASE64_PREFIX + Base64.encodeBase64String(book.getPhoto()))
                 .build();
-        return bookDto;
     }
 }
 

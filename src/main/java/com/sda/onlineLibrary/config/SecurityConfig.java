@@ -1,10 +1,11 @@
 package com.sda.onlineLibrary.config;
 
-import jakarta.servlet.http.PushBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -31,12 +32,11 @@ public class SecurityConfig {
                     auth.requestMatchers("/addBook").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/book/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/books").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/logout").hasAnyRole("ADMIN", "USER");
 
                     auth.requestMatchers("/addReview").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/reviews").hasAnyRole("ADMIN", "USER");
-
-
-
+                    auth.requestMatchers("/review/**").hasAnyRole("ADMIN", "USER");
 
 
                 });
@@ -51,9 +51,7 @@ public class SecurityConfig {
                 .and()
                      .cors().disable().authorizeHttpRequests();
 
-
         return http.build();
 
     }
-
 }

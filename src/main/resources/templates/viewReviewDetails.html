@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+
+    <style>
+        h1 {
+            font-family: 'Allura', cursive;
+            font-size: 100px;
+            text-align: center;
+        }
+        body{
+            background-image: url("/photos/review.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .book-div{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/books">All books</a></li>
+                <li><a href="/addBook">Add a book</a></li>
+                <li><a href="/reviews">Review</a></li>
+                <li><a href="/addReview">Add a review</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h1>Here is your review: <h1>
+<form th:action="${requestUrl}" method="post">
+    <div class="book-div">
+        <div style="display: flex; align-items: center; font-size: 25px;">
+            <div style="flex :1;">
+                <span></span>
+                <img th:src="${reviewDto.photoBase64}" style="width: 300px; height: 400px;">
+            </div>
+            <div style="flex:2; text-align: left; font-size: 37px; margin-right:100px; font-family: sans-serif;">
+                <div>
+                    <span>Name:</span>
+                    <span th:text="${reviewDto.bookName}"></span>
+
+                </div>
+                <div>
+                    <span>Rating:</span>
+                    <span th:text="${reviewDto.rating}"></span>
+                </div>
+
+                <div>
+                    <span>Review:</span>
+                    <span th:text="${reviewDto.review}"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</form>
+</body>
+</html>

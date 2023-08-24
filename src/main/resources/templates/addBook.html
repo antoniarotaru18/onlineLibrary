@@ -1,66 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Add a book</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <style>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+    <style>
 
-            .navbar {
-                margin-bottom: auto;
-                border-radius: 0;
-            }
-            .sidenav {
-                padding-top: 20px;
-                padding-right: 20px;
-                padding-left: 20px;
-                background-color: #f1f1f1;
-                height: 100%;
+        .navbar {
+            margin-bottom: auto;
+            border-radius: 0;
+        }
 
+        .navbar-nav {
+            display: inline-block;
+            float: none;
+            text-align: center;
+        }
 
-            }
-            .bookForm {
-                font-size: 150%;
-                color: #2d002d;
-                margin: 0 auto;
-                max-width: 500px;
-                text-align: right;
-                margin-top: 10%;
-            }
+        .navbar-nav > li {
+            display: inline-block;
+        }
 
 
-            /* Set gray background color and 100% height */
-            /* On small screens, set height to 'auto' for sidenav and grid */
-            @media screen and (max-width: 500px) {
-                .sidenav {
-                    height: auto;
-                    padding: 15px;
-                }
-                .row.content {height:auto;}
-            }
-            h1 {
-                text-align: center;
+        .btn-primary {
+            color: #101010;
+            background-color: #cdbcee;
+            border: black;
+            display: block;
+            margin: 0 auto;
+        }
 
-            }
+        body {
+            background-image: url("/photos/ads.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
 
-            .btn-primary{
-                color: #ffffff;
-                background-color: #6c006c;
-                border: black;
-                display: block;
-                margin: 0 auto;
-            }
+        .reg-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: rgba(136, 73, 120, 0.73);
+            width: fit-content;
+            padding: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
 
-        </style>
+        }
+
+        .reg-element {
+            font-size: 1.5em;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .container-border {
+            border: 3px solid rgb(131, 109, 99);
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 0.5%;
+        }
+
+        header {
+            background-color: #816a60;
+        }
+        h1 {
+            font-family: 'Allura', cursive;
+            font-size: 100px;
+            text-align: center;
+            color: black;
+        }
+
+    </style>
 </head>
 <body class="body">
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav ">
                 <li><a href="/home">Home</a></li>
                 <li><a href="/books">All books</a></li>
                 <li><a href="/addBook">Add a book</a></li>
@@ -68,48 +94,37 @@
                 <li><a href="/addReview">Add a review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="container-fluid text-center">
-    <div class="row content">
-        <div class="col-sm-8 text-left">
-            <h1>Aici este locul unde îți poți adăuga cărțile în bibliotecă ca să le poți avea la îndemană!</h1>
-        </div>
-        <div class="col-sm-2 sidenav">
-            <div class="col-sm-2 sidenav">
-                <img src="addBook.jpg" alt="descript" style="max-width: 100%;">
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--  de aici incepe formularul de adaugare ---------------------------------------------------------------------   -->
-<div class="bookForm" >
-    <form th:object="${bookDto}"  action="/addBook" method="post" style="text-align:left; max-width: 500px; margin: 0% " enctype="multipart/form-data" >
-        <div class="form-group">
+<h1>Add a book in your online library:</h1>
+<div class="reg-container container-border">
+    <form th:object="${bookDto}" action="/addBook" method="post" style="text-align:left; max-width: 500px; margin: 0% "
+          enctype="multipart/form-data">
+
+        <div class="reg-element">
             <label class="form-label" for="inputName">Book Name</label>
             <input th:field="*{name}" type="text" class="form-control" id="inputName" placeholder="Name">
         </div>
 
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputAuthor">Book Author</label>
             <input th:field="*{author}" type="text" class="form-control" id="inputAuthor" placeholder="Author">
         </div>
-
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputPublisher">Book Publisher</label>
             <input th:field="*{publisher}" type="text" class="form-control" id="inputPublisher" placeholder="Publisher">
         </div>
 
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputPages">Book Pages</label>
             <input th:field="*{pages}" type="number" class="form-control" id="inputPages" placeholder="Pages">
         </div>
 
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputGenre">Book Genre</label>
             <select th:field="*{genre}" class="form-control" id="inputGenre" name="genre">
                 <option value="ROMANCE">Romance</option>
@@ -125,7 +140,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputStatus">Book Status</label>
             <select th:field="*{status}" class="form-control" id="inputStatus" name="genre">
                 <option value="UNREAD">Unread</option>
@@ -135,12 +150,12 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="reg-element">
             <label class="form-label" for="inputPhoto">Book Photo</label>
             <input type="file" class="form-control" id="inputPhoto" name="bookPhoto" placeholder="Photo"><br>
         </div>
 
-        <button type="submit" class="btn btn-primary" >Add the book to your virtual library.</button>
+        <button type="submit" class="btn btn-primary">Add the book to your virtual library.</button>
     </form>
 </div>
 </body>

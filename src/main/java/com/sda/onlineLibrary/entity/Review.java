@@ -14,6 +14,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @OneToOne
     @JoinColumn
     private Book book;

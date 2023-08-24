@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Book list</title>
+    <title>Review Details</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -12,42 +12,34 @@
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
-        }
-        h1 {
-            text-align: center;
-        }
-        .col-md-3 {
-            width: 20%;
-            margin-bottom: 30px;
-        }
 
-        .book-div {
+        }
+        .book-div{
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.73);
         }
+        .col-md-3 {
+            width: 20%;
+            margin-bottom: 20px;
+        }
+
         h1 {
-              font-family: 'Allura', cursive;
-              font-size: 100px;
-              text-align: center;
-          }
-        body{
-            background-image: url("/photos/background.png");
+            font-family: 'Allura', cursive;
+            font-size: 100px;
+            text-align: center;
         }
-        .product-container{
-            margin-top: 0.5%;
+        body {
+            background-image: url("/photos/review.png");
+            background-size: cover;
+            background-repeat: no-repeat;
         }
-
-
-
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="/home">Home</a></li>
@@ -60,35 +52,21 @@
                 <li sec:authorize="isAuthenticated()" ><a href="/logout">Logout</a></li>
             </ul>
         </div>
+
     </div>
 </nav>
-<h1>Here you can see all your books!</h1>
-<div class="title">
 
-</div>
+<h1>Here you can see all the reviews you have added to the books you read!</h1>
 
-<br>
-<div class="product-container">
-    <div th:each="book : ${books}" class="col-md-3">
-        <div class="book-div">
-            <div>
-                <span>Name:</span>
-                <a th:href="@{/book/{x}(x = ${book.id})}" th:text="${book.name}"></a>
-            </div>
-            <div>
-                <span>Author:</span>
-                <span th:text="${book.author}"></span>
-            </div>
-
-            <div>
-                <span>Status:</span>
-                <span th:text="${book.status}"></span>
-            </div>
-
-            <div>
-                <span></span>
-                <img th:src="${book.photo}" style="width: 250px; height: 300px;">
-            </div>
+<div th:each="review : ${reviews}" class="col-md-3">
+    <div class="book-div">
+        <div style="font-size: 20px;">
+            <span>Name:</span>
+            <a th:href="@{/review/{x}(x = ${review.bookName})}" th:text="${review.bookName}"></a>
+        </div>
+        <div>
+            <span></span>
+            <img th:src="'data:image/jpeg;base64,' + ${review.photoBase64}" style="width: 250px; height: 300px;" alt="">
         </div>
     </div>
 </div>
