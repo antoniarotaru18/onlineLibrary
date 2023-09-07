@@ -56,7 +56,8 @@ public class MvcController {
 
     @PostMapping("/addBook")
     public String addBookPost(@ModelAttribute(name = "bookDto") @Valid BookDto bookDto
-            , BindingResult bindingResult, @RequestParam("bookPhoto") MultipartFile bookPhoto, Authentication authentication) throws IOException {
+            , BindingResult bindingResult, @RequestParam("bookPhoto") MultipartFile bookPhoto,
+                              Authentication authentication) throws IOException {
 
         bookService.createBook(bookDto, bookPhoto, authentication.getName());
         if (bindingResult.hasErrors()) {
@@ -79,7 +80,8 @@ public class MvcController {
     }
 
     @PostMapping("/book/{bookId}/update")
-    public String updateBookStatus(@PathVariable(value = "bookId") String bookId, @RequestParam("newStatus") String newStatus) {
+    public String updateBookStatus(@PathVariable(value = "bookId") String bookId,
+                                   @RequestParam("newStatus") String newStatus) {
         Status status = Status.valueOf(newStatus);
         System.out.println("s-a apelat update");
         bookService.updateBookStatus(bookId, status);
@@ -114,7 +116,8 @@ public class MvcController {
     }
 
     @PostMapping("/login")
-    public String loginPost(@ModelAttribute(name = "loginDto") @Valid LoginDto loginDto, BindingResult bindingResult, Model model) {
+    public String loginPost(@ModelAttribute(name = "loginDto") @Valid LoginDto loginDto,
+                            BindingResult bindingResult, Model model) {
         System.out.println(loginDto);
         if (bindingResult.hasErrors()) {
             return "login";
@@ -153,7 +156,6 @@ public class MvcController {
     public  String getAllReviews(Model model, Authentication authentication) {
         List<ReviewDto> reviewDtoList = reviewService.getAllReviews(authentication.getName());
         model.addAttribute("reviews", reviewDtoList);
-        //transform reviews in reviewDtos si pe urma o afisez in front
         return "reviews";
     }
 

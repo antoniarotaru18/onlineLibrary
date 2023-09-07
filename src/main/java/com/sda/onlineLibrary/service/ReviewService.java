@@ -17,13 +17,10 @@ import java.util.*;
 
 @Service
 public class ReviewService {
-
     @Autowired
     private ReviewRepository reviewRepository;
-
     @Autowired
     private BookRepository bookRepository;
-
     @Autowired
     private ReviewMapper reviewMapper;
 
@@ -40,7 +37,6 @@ public class ReviewService {
 
         reviewRepository.save(review);
     }
-
 
     public List<ReviewDto> getAllReviews(String name) {
         List<ReviewDto> reviewDtoList = new ArrayList<>();

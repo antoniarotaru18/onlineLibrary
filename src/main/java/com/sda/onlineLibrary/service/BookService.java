@@ -27,13 +27,10 @@ public class BookService {
     private BookMapper bookMapper;
     @Autowired
     private BookRepository bookRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ReviewRepository reviewRepository;
-
 
     public void createBook(BookDto bookDto, MultipartFile bookPhoto, String email) {
         Optional<User> optionalUser = userRepository.findByPersonalEmail(email);
@@ -43,7 +40,6 @@ public class BookService {
         Book book = bookMapper.map(bookDto, bookPhoto, optionalUser.get());
         bookRepository.save(book);
     }
-
     public List<BookDto> getAllBookDtoListByUsername(Authentication authentication) {
         String user = authentication.getName();
         Iterable<Book> bookList = bookRepository.findByUsersPersonalEmail(user);
